@@ -1,0 +1,27 @@
+---
+version: '3.9'
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: pg
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: nextjs_starter
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  nextjs:
+    container_name: nextjs
+    env_file: apps/nextjs/.env.local
+    restart: always
+    build:
+      context: .
+      dockerfile: dev.nextjs.Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - '4200:4200'
+volumes:
+  postgres_data:

@@ -1,0 +1,58 @@
+{
+  "version": 2,
+  "projects": {
+    "nextjs": {
+      "root": "apps/nextjs",
+      "sourceRoot": "apps/nextjs",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/nextjs",
+            "outputPath": "dist/apps/nextjs",
+            "assets": []
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "nextjs:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "nextjs:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "nextjs:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/nextjs"],
+          "options": {
+            "jestConfig": "apps/nextjs/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/nextjs/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    }
+  }
+}
